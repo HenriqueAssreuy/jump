@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnx0r8v72wfxk"]
+
+[ext_resource type="Texture2D" uid="uid://d0ert8a2cef0t" path="res://tile01.png" id="1_cq4ho"]
+[ext_resource type="Script" path="res://level_1.gd" id="1_ddcok"]
+[ext_resource type="PackedScene" uid="uid://b6hu76sdk84nh" path="res://player.tscn" id="2_bqe5x"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tm3b8"]
+texture = ExtResource("1_cq4ho")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_i01wg"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_tm3b8")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3f35"]
+size = Vector2(2040, 20)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_ddcok")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_i01wg")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, -65522, 0, 0, -65521, 0, 0, -65520, 0, 0, -65519, 0, 0, -65518, 0, 0, -131052, 0, 0, -131051, 0, 0, -131050, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 35, 0, 0, 36, 0, 0, 37, 0, 0, 38, 0, 0, 39, 0, 0, 40, 0, 0, -131024, 0, 0, -262088, 0, 0, 62, 0, 0, 196677, 0, 0, 196678, 0, 0, 196679, 0, 0, 196680, 0, 0, 196681, 0, 0, 196682, 0, 0)
+
+[node name="CharacterBody2D" parent="TileMap" instance=ExtResource("2_bqe5x")]
+position = Vector2(4, -7)
+
+[node name="Camera2D" type="Camera2D" parent="TileMap/CharacterBody2D"]
+zoom = Vector2(3.975, 3.975)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(639, 85)
+shape = SubResource("RectangleShape2D_d3f35")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
